@@ -1,0 +1,124 @@
+SELECT *
+FROM employees;
+
+SELECT SUM(salary), MAX(salary), MIN(salary), AVG(salary)
+FROM employees
+WHERE department_id = 60;
+
+SELECT MIN(last_name), MAX(last_name)
+FROM employees;
+
+SELECT MIN(hire_date), MAX(hire_date)
+FROM employees;
+
+--COUNT(*)만 NULL포함하므로 괄호안에 다른 값이 들어가면 NULL값 제외하고 셈
+SELECT COUNT(*), COUNT(department_id), COUNT(DISTINCT department_id)
+FROM employees;
+
+SELECT AVG(commission_pct), AVG(NVL(commission_pct, 0)), SUM(commission_pct) / COUNT (commission_pct)
+--1번과 3번은 NULL을 제외하고 계산해서 값이 같음. 2번은 NUL을 0으로 바꾼다음 계산했으므로 COUNT가 20개가 돼서 결과가 달라짐
+FROM employees;
+
+
+--GROUP BY절의 사용
+SELECT department_id, SUM(salary), COUNT(*)
+FROM employees
+GROUP BY department_id --안쓰면 첫째줄에서 오류남
+ORDER BY 2; --왼쪽 열 부터 1,2,3번
+
+SELECT department_id, job_id, SUM(salary), COUNT(*)
+FROM employees
+GROUP BY department_id, job_id --부서별 직책마다 그룹을 만들어 준다
+ORDER BY 1, job_id; 
+
+SELECT department_id, job_id, SUM(salary), COUNT(*)
+FROM employees
+WHERE department_id >= 50
+GROUP BY department_id, job_id
+ORDER BY 1, job_id;
+
+--HAVING 절
+SELECT department_id, job_id, SUM(salary), COUNT(*)
+FROM employees
+GROUP BY department_id, job_id
+HAVING COUNT(*) <> 1
+ORDER BY 1, job_id;
+
+SELECT MAX(SUM(salary))
+FROM employees
+GROUP BY department_id;
+
+
+--JOIN
+
+--잘못된 조인 구문의 예 (최대로 나올 수 있는 모든 경우의 수 모두 출력 : 필요없는 것도 나옴)
+SELECT employee_id, last_name, department_name
+FROM employees, departments;
+
+SELECT COUNT(*)
+FROM employees;
+
+--1) EQUI-JOIN
+SELECT e.employee_id, e.last_name, e.department_id, d.department_id, d.location_id
+FROM employees e, departments d
+WHERE e.department_id = d.department_id;
+
+SELECT employees.employee_id, employees.last_name, employees.department_id, departments.department_id, departments.location_id
+FROM employees, departments
+WHERE employees.department_id = departments.department_id;
+
+--Depratments와 locations를 Equi 조인을 활용해서 데이터 조회
+SELECT d.department_name, d.department_id, l.location_id, l.city
+FROM departments d, locations l
+WHERE d.location_id = l.location_id;
+
+--NON-EQUI join
+SELECT *
+FROM job_grades;
+
+SELECT e.employee_id, e.last_name, e.salary, j.grade_level
+FROM employees e, job_grades j
+WHERE e.salary BETWEEN j.lowest_sal AND HIGHEST_SAL;
+
+
+-- 실습 문제1)
+-- 사원들의 이름, 부서번호, 부서명을 출력하라
+SELECT e.first_name, e.department_id, d.department_name
+FROM employees e, departments d
+WHERE e.department_id = d.department_id;
+
+-- 실습 문제2)
+-- 사원이름과 부서명과 월급을 출력하는데 월급이 3000 이상인 사원을 출력하라
+SELECT e.first_name, d.department_name, e.salary
+FROM employees e, departments d
+WHERE e.department_id = d.department_id AND e.salary >= 3000;
+
+-- 문제1) 커미션을 받는 사원의 이름, 직업, 부서번호,부서명을 출력하라
+SELECT e.first_name, e.job_id, d.department_id, d.department_name
+FROM employees e, departments d
+WHERE e.department_id = d.department_id AND e.commission_pct IS NOT NULL;
+
+-- 문제2) 지역번호 2500 에서 근무하는 사원의 이름, 직업,부서번호,부서명을 출력하라
+SELECT e.first_name, e.job_id, d.department_id, d.department_name
+FROM employees e, departments d
+WHERE e.department_id = d.department_id AND d.location_id = 2500;
+
+-- 문제3) 이름에 A가 들어가는 사원들의 이름과 부서이름을 출력하라
+SELECT e.first_name, d.department_name
+FROM employees e, departments d
+WHERE e.department_id = d.department_id AND INSTR(e.first_name, 'a') <> 0;
+
+-- 문제4) 사원이름과 부서명과 월급을 출력하는데 월급이 3000 이상인 사원을 출력하라
+SELECT e.first_name, d.department_id, e.salary
+FROM employees e, departments d
+WHERE e.department_id = d.department_id AND e.salary >= 3000;
+
+-- 문제5) 급여가 3000에서 5000사이인 사원의 이름과 소속부서명 출력하라
+SELECT e.first_name, d.department_name
+FROM employees e, departments d
+WHERE e.department_id = d.department_id AND e.salary BETWEEN 3000 AND 5000;
+
+-- 문제6) ACCOUNTING 부서 소속 사원의 이름과 입사일 출력하라
+SELECT e.first_name, e.hire_date
+FROM employees e, departments d
+WHERE e.department_id = d.department_id AND UPPER(d.department_name) = 'ACCOUNTING';
