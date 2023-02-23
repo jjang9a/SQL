@@ -1,0 +1,73 @@
+SELECT *
+FROM users;
+
+DESC users;
+
+CREATE TABLE store (
+	s_id	NUMBER(5)		PRIMARY KEY,
+	s_name	VARCHAR2(50)		NOT NULL,
+	s_kind	VARCHAR2(20)		NOT NULL,
+	s_menu	VARCHAR2(100)		,
+	s_money	 VARCHAR2(50)		,
+	s_location	VARCHAR2(15)		NOT NULL,
+	s_point	NUMBER(4)		NOT NULL,
+	u_id	VARCHAR2(30)		NOT NULL,
+    CONSTRAINT u_id_fk FOREIGN KEY(u_id) REFERENCES users(u_id)
+);
+
+CREATE TABLE anonyboard (
+	a_id	NUMBER(5)		PRIMARY KEY,
+	a_date	date		default sysdate,
+	a_title	VARCHAR2(60)		NOT NULL,
+	a_body	VARCHAR2(900)		NOT NULL,
+	u_id	VARCHAR2(30)		NOT NULL,
+    CONSTRAINT u_id2_fk FOREIGN KEY(u_id) REFERENCES users(u_id)
+);
+
+CREATE TABLE anonycomm (
+	ac_date	date		NULL,
+	ac_body	VARCHAR2(300)		NOT NULL,
+	u_id	VARCHAR2(30)		NOT NULL,
+	ac_id	NUMBER(5)		unique,
+	a_id	NUMBER(5)		NOT NULL,
+    CONSTRAINT u_id3_fk FOREIGN KEY(u_id) REFERENCES users(u_id),
+    CONSTRAINT a_id_fk FOREIGN KEY(a_id) REFERENCES anonyboard(a_id)
+);
+
+CREATE TABLE suggest (
+	su_id	NUMBER(5)		PRIMARY KEY,
+	su_date	date		default sysdate,
+	su_kind	CHAR(6)		,
+	su_title	VARCHAR2(30)		NOT NULL,
+	su_body	VARCHAR(255)		NOT NULL,
+	u_id	VARCHAR2(30)		NOT NULL,
+    CONSTRAINT u_id4_fk FOREIGN KEY(u_id) REFERENCES users(u_id)
+);
+
+CREATE TABLE suggestcomm (
+	suc_body	VARCHAR2(100)		NOT NULL,
+	u_id	VARCHAR2(30)		NOT NULL,
+	su_id	NUMBER(5)		NOT NULL,
+    CONSTRAINT u_id5_fk FOREIGN KEY(u_id) REFERENCES users(u_id),
+    CONSTRAINT su_id_fk FOREIGN KEY(su_id) REFERENCES suggest(su_id)
+);
+
+CREATE TABLE recipe (
+	r_id	NUMBER(5)		PRIMARY KEY,
+	r_date	date		default sysdate,
+	r_title	VARCHAR2(60)		NOT NULL,
+	r_body	VARCHAR2(1200)		NOT NULL,
+	u_id	VARCHAR2(30)		NOT NULL,
+    CONSTRAINT u_id6_fk FOREIGN KEY(u_id) REFERENCES users(u_id)
+);
+
+CREATE TABLE recipelike (
+	r_id	NUMBER(5)		NOT NULL,
+	u_id	VARCHAR2(30)		NOT NULL,
+    CONSTRAINT u_id7_fk FOREIGN KEY(u_id) REFERENCES users(u_id),
+    CONSTRAINT r_id_fk FOREIGN KEY(r_id) REFERENCES recipe(r_id)
+);
+
+select *
+from users
+where u_name = '예담학생';
