@@ -1,0 +1,43 @@
+update users set u_attend = 1;
+
+commit;
+
+select u.u_id, u.u_name, u.u_attend, u.att
+from (
+    select u_id, u_name, u_attend, RANK() OVER(ORDER BY u_attend desc) att
+    from users
+    )u
+where u.att < 4 AND u_attend != 0;
+
+desc store;
+
+CREATE SEQUENCE store_seq
+                            INCREMENT BY 1
+                            START WITH 1
+                            MAXVALUE 9999;
+
+ALTER TABLE store
+ADD 	s_date	date		default sysdate;
+
+select *
+from store;
+
+CREATE SEQUENCE anony_seq
+                            INCREMENT BY 1
+                            START WITH 1
+                            MAXVALUE 9999;
+CREATE SEQUENCE recipe_seq
+                            INCREMENT BY 1
+                            START WITH 1
+                            MAXVALUE 9999;
+CREATE SEQUENCE suggest_seq
+                            INCREMENT BY 1
+                            START WITH 1
+                            MAXVALUE 9999;
+
+desc recipelike;
+
+select *
+from anony;
+
+desc store;
