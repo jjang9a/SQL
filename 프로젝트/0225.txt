@@ -1,0 +1,94 @@
+drop table store;
+CREATE TABLE store (
+	s_id	NUMBER(5)		PRIMARY KEY,
+	s_name	VARCHAR2(50)		NOT NULL,
+	s_kind	VARCHAR2(20)		NOT NULL,
+	s_menu	VARCHAR2(100)		,
+	s_money	 VARCHAR2(50)		,
+	s_location	VARCHAR2(15)		NOT NULL,
+	s_point	NUMBER(4,2)		NOT NULL,
+	u_id	VARCHAR2(30)		NOT NULL,
+    CONSTRAINT u_id_fk FOREIGN KEY(u_id) REFERENCES users(u_id),
+    u_name VARCHAR(50),
+    s_date date default sysdate
+);
+
+ALTER table suggest
+add u_name varchar(50);
+
+ALTER table recipe
+add u_name varchar(50);
+
+commit;
+
+select * from recipe
+where u_name = 'asdasd'
+order by r_id;
+
+select count(u_id) num
+from recipelike
+where r_id = 1
+group by r_id;
+
+insert into recipelike values (2, 'system');
+
+
+
+commit;
+
+desc recipe;
+
+drop table recipelike;
+
+CREATE TABLE recipelike (
+	r_id	NUMBER(5)		NOT NULL,
+	u_id	VARCHAR2(30)		NOT NULL,
+    CONSTRAINT u_id7_fk FOREIGN KEY(u_id) REFERENCES users(u_id)
+);
+
+commit;
+
+select * from suggest;
+
+select a.ac_date, a.ac_body, u_id, a.ac_id, a.a_id, u.u_name
+from anonycomm a natural join users u
+where a_id = 1
+order by ac_id;
+
+desc anonycomm;
+desc suggestcomm;
+
+CREATE SEQUENCE anonycomm_seq
+                            INCREMENT BY 1
+                            START WITH 1
+                            MAXVALUE 9999;
+                            
+CREATE SEQUENCE suggestcomm_seq
+                            INCREMENT BY 1
+                            START WITH 1
+                            MAXVALUE 9999;
+
+select *
+from users;
+
+select a.suc_body, u_id, a.su_id, u.u_name
+from suggestcomm a natural join users u
+where su_id = 1;
+
+ALTER table suggest
+modify su_title varchar2(50);
+
+update suggest
+set su_title = '익명게시판 1번글 신고합니다'
+where su_id = 4;
+
+commit;
+
+select *
+from store;
+
+update store
+set s_point = 8.7
+where s_id = 7;
+
+commit;

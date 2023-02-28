@@ -1,0 +1,68 @@
+select *
+from store;
+
+update store
+set s_name = '이원규 까르보나라의 돈까스'
+where s_id = 12;
+
+commit;
+
+create table attend_log(
+u_id varchar2(30),
+CONSTRAINT u_id9_fk FOREIGN KEY(u_id) REFERENCES users(u_id),
+att_date date default sysdate
+);
+
+select count(distinct(to_char(att_date, 'yy/mm/dd'))) att
+from attend_log
+where u_id = 'system'
+group by u_id;
+
+commit;
+
+desc attend_log;
+
+select *
+from attend_log;
+
+select * 
+from users;
+
+update recipe
+set r_title = '10000커피인줄??!!'
+where r_id = 3;
+
+select s.s_name, s.s_kind, s.s_location, s.avgp, s.att
+from (
+    select s_name, s_kind, s_location, avg(s_point) avgp, RANK() OVER(ORDER BY avg(s_point) desc) att
+    from store
+    group by s_name, s_kind, s_location
+ )s
+where s_location = '중구';
+
+    select s_name, s_kind, s_location, avg(s_point) avgp, RANK() OVER(ORDER BY avg(s_point) desc) att
+    from store
+    group by s_name, s_kind, s_location;
+
+
+select * from store;
+
+select avg(s_point)
+from store
+group by s_name;
+
+update store
+set s_kind = '양식'
+where s_id = 7;
+
+commit;
+
+select *
+from attend_log;
+
+update users
+set u_attend =14, u_post = 10, u_comment = 20
+where u_id = 'yang2';
+
+select *
+from users;
