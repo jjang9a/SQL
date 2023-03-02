@@ -1,0 +1,9 @@
+1.이클립스 최신버전 다운
+2. apache tomcat 다운(버전9)
+
+뉴 - 다이나믹 웹 프로젝트 
+프레퍼런스 - 서버 - 런타임 어쩌고 설정
+eco 쳐서 utf8 설정
+
+
+C:\oraclexe\app\oracle\product\11.2.0\server\jdbc\lib
