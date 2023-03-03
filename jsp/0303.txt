@@ -52,3 +52,19 @@ maven repository
 1.검색창에 lombok 검색
 프로젝트 롬복 1.18.26 누르고 jar파일 다운
 다운된 파일 WEB-INF 안에 lib 폴더 안에(ojdbc있는폴더) 집어넣기
+
+
+
+create table members(
+id varchar2(10) PRIMARY key,
+name varchar2(100) not null,
+passwd varchar2(10) not null,
+mail varchar2(30) not null
+);
+
+insert into members values('user1', '사용자1', '1111', 'user1@email');
+insert into members values('user2', '사용자2', '1111', 'user2@email');
+insert into members values('user3', '사용자3', '1111', 'user3@email');
+insert into members values('user4', '사용자4', '1111', 'user4@email');
+
+commit;
