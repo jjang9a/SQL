@@ -1,0 +1,54 @@
+서블릿의 지역변수 / 멤버변수
+
+상태유지 기술
+http: 요청 -> 응답 : 요청, 응답 - 처리가 되고 나면 메모리에서 사라짐.
+client A 요청 -> 서버가 응답.
+client B 요청 -> 서버가 응답.
+응답을 하고 나면 어느 클라이언트가 요청한건지 알 수 없어짐
+그 정보를 클라이언트 or 서버쪽에 남겨둠
+ ㄴ 클라이언트 쪽에 남김 - 쿠키활용
+ ㄴ 서버쪽에 남김 - 요청별로 or 로그인 유저별(세션) or 서버(컨텍스트-어플리케이션 마다 남기고 싶을때 사용)에 남김
+
+https://tmxhsk99.tistory.com/135 참고
+
+어플리케이션 컨텍스트(어플리케이션 마다 생성되는 객체)
+/servletConfigTest, /servletConfig
+context에 param이라는 값 지정 / context에 값을 불러옴
+setAttribute("param"),	      getAttribute("param")
+
+//
+session : 접속하는 유저별(로그인)
+request : 요청하는 페이지별()
+
+
+//데이터 베이스 어플리케이션
+co.dev.common	- Database connection 기능.
+		공통기능
+co.dev.dao	- 모듈별 db처리 (EmpDAO, DeptDAO ...)
+co.dev.service	- 업무별 처리(서비스 로직(입력, 수정, 삭제, 조회) 
+		1) select - update
+		2) select - delete
+((가장 작은 단위들로 기능을 구현해놓고 그 기능들을 조합해 쓰면 반복되는 코드를 줄일 수 있음.))
+/ 영속계층(db) : insert, update, delete, select)
+	1) search - update;
+	2) search - delete;
+	3) search - update - delete;
+	- 하나의 처리 프로세스를 가장 기본단위로 구현
+	- 사원정보 조회 후 사원정보 변경.
+	- 사원정보 조회 후 사원정보 삭제.
+
+co.dev.controller 	- 사용자의 요청 - 뷰(화면)
+co.dev.vo		- 테이블의 각 정보 - 클래스
+
+--> jsp를 활용하여 사용자 뷰를 만들어줌
+
+
+lombok
+다운 되면 cmd 창에서
+1. cd Downloads
+2. java -jar lombok.jar 켜지면 이클립스 켜진 폴더 찾아가서 exe 실행
+		
+maven repository
+1.검색창에 lombok 검색
+프로젝트 롬복 1.18.26 누르고 jar파일 다운
+다운된 파일 WEB-INF 안에 lib 폴더 안에(ojdbc있는폴더) 집어넣기
