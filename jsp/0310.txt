@@ -1,0 +1,44 @@
+create table product (
+product_code varchar2(10) primary key,
+product_name varchar2(100) not null,
+origin_price NUMBER not null,
+sale_price number,
+product_desc varchar2(1000) not null,
+like_it number(3,1) not null,
+image varchar2(100)
+);
+
+insert into product values('CF0001', '과테말라 안티구아', 5000, 4500, '과테말라 안티구아 커피입니다', 4.5, '과테말라 안티구아.jpg');
+insert into product values('CF0002', '니카라구아 더치원두', 6000, 5400, '니카라구아 더치원두입니다', 3.5, '니카라구아 더치.jpg');
+insert into product values('CF0003', '브라질 산토스', 5300, 4800, '브라질 산토스 커피입니다', 4.5, '브라질산토스.jpg');
+insert into product values('CF0004', '에티오피아 예가체프', 5500, 5000, '에티오피아 예가체프 커피입니다', 4.0, '에티오피아 예가체프.jpg');
+insert into product values('CF0005', '케냐 오크라톡신', 5800, 5300, '케냐 오크라톡신 커피입니다', 3.0, '케냐 오크라톡신.jpg');
+insert into product values('CF0006', '코스타리카 따라주', 6500, 6000, '코스타리카 따라주 커피입니다', 5.0, '코스타리카 따라주.jpg');
+
+select * from product;
+
+commit;
+
+delete from product;
+
+drop table product;
+
+select * from (
+select * from product order by like_it desc ) a
+where rownum <= 4;
+
+create table book (
+  book_code varchar2(15) primary key,
+  book_title varchar2(50) not null,
+  book_author varchar2(50) not null,
+  book_press varchar2(50) not null,
+  book_desc varchar2(500),
+  book_price int
+);
+
+select * from book;
+
+insert into book
+values ('P120001','해리포터와 마법사의 돌', 'J.K.롤링', '문학수첩', '코가 뭉개진 대머리 아저씨가 10대 소년에게 집착하는 이야기', 9000);
+
+commit;
