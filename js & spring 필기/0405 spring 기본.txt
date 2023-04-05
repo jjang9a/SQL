@@ -1,0 +1,48 @@
+스프링 3버전 설치
+C\DEV 안에 압축풀기
+properties 설정
+enco : UTF-8 / runtime : 톰캣
+
+file - new - spring regacy project
+
+서버 포트 8081로 바꾸기
+
+======== pom.xml ===========
+<maven dependency 추가해야할 것>
+lombok(제일 아래) - jsp때 했던거 보면서 cmd로 spring에 lombok설치
+spring-test 쳐서 맨 위에 Spring TestContext Framework (Spring 맨 아래)
+ojdbc8 쳐서 두번째꺼 19.3 버전
+hikariCP 2.7.4버전
+
+log4j2 6번째꺼 jdbc 4.1 -> 4
+
+mybatis 3.4.6버전
+MyBatis Spring 1.3.2버전
+spring jdbc 버전 ${org.springframework-version}
+
+jackson-databind 버전 2.9.4
+
+<수정해야 할 부분>
+맨 위쪽 org.스프링프레임워크-버전 => 5.0.7
+위에서 복사해온 spring-test 그거 버전 ${org.springframework-version}으로
+junit 버전 4.12로
+
+log4j 버전 1.2.17로 수정하고 밑에 exclusion부분 지우기
+
+다 했으면 메이븐 - 업데이트 프로젝트
+=============================
+
+새 패키지가 추가 되면
+spring / root-context.xml
+Namespace쪽에서 context 체크
+<context:component-scan base-package="org.zerock.sample"></context:component-scan>
+이런식으로 새 컨트롤러 입력해두기
+
+hikari 설정 root-context.xml에 추가
+
+껐다켜고 Namespace mybatis 체크
+<mybatis-spring:scan base-package="org.zerock.mapper"/>
+
+
+
+mybatis 홈페이지 시작하기 - 매핑된SQL구문 살펴보기 copy

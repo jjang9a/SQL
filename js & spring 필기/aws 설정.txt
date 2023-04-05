@@ -1,0 +1,20 @@
+-aws
+-putty
+https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html
+-docker
+https://docs.docker.com/engine/install/ubuntu/
+설치 명령어 따라하기
+
+페이지 아래쪽의 first step 따라하기
+https://docs.docker.com/engine/install/linux-postinstall/
+
+$sudo docker pull oracleinanutshell/oracle-xe-11g
+$sudo docker run -d -p 1521:1521 --name oracle11g oracleinanutshell/oracle-xe-11g
+$sudo docker ps -a
+$sudo docker exec -it oracle11g /bin/sh
+#su - oracle
+$sqlplus / as sysdba
+SQL> alter user hr identified by hr account unlock;
+
+aws인스턴스에 경고가 생기면 aws에서 인스턴스 재부팅 하고
+sudo docker start oracle11g 입력
