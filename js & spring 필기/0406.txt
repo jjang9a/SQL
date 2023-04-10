@@ -1,0 +1,40 @@
+new - spring project regacy -> spring MVC project -> com.yedam.board -> finish
+
+pom.xml 어제 했던거에서 properties랑 dependencies부분 붙여넣기
+plugin org.apache.maven.plugins부분에 source랑 tatget 11로 바꾸기(자바버전)
+
+root-context.xml 붙여넣기
+제일 아랫부분 없는 context줄 삭제하고 mapper위치 수정
+
+log4jdbc.log4j2.properties 파일 resources 밑에 붙여넣기
+
+src/main/resoutces폴더 안에 폴더폴더폴더폴더만들어서 mapper.xml만들기
+
+pom.xml 서블릿쪽에 맨 위에 칭구
+<dependency>
+	<groupId>javax.servlet</groupId>
+	<artifactId>javax.servlet-api</artifactId>
+	<version>3.1.0</version>
+	<scope>provided</scope>
+</dependency>
+로 바꾸기(두번째, 세번째 줄)
+
+
+web.xml에	
+<!-- 한글처리 필터 -->
+<filter>
+	<filter-name>encoding</filter-name>
+	<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+	<init-param>
+		<param-name>encoding</param-name>
+		<param-value>UTF-8</param-value>
+	</init-param>
+</filter>
+<filter-mapping>
+	<filter-name>encoding</filter-name>
+	<servlet-name>appServlet</servlet-name>
+</filter-mapping>
+마지막의 appServlet은 아랫줄의 서블릿네임과 같게 넣으면 됨
+
+
+

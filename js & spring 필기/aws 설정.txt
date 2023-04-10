@@ -18,3 +18,5 @@ SQL> alter user hr identified by hr account unlock;
 
 aws인스턴스에 경고가 생기면 aws에서 인스턴스 재부팅 하고
 sudo docker start oracle11g 입력
+
+$sudo docker ps -a 해서 exit 돼있으면 서버 종료돼있는거니 그때도 윗 줄 입력

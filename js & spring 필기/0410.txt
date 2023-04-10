@@ -1,0 +1,44 @@
+REST Type
+
+maven Jackson Dataformat XML - 2.9.4
+
+크롬 앱스토어 - rest 눌러서 위 두개중 상관없지만 책은 YARC 추천
+
+우클릭 - Properties - Web Project Settings => Context root : / (/boar) 편한대로설정
+
+
+create table tbl_reply (
+rno number, -- 댓글번호(키)
+bno number not null, -- 원본글번호(게시판 글번호)
+reply varchar2(1000) not null, -- 댓글 내용
+replyer varchar2(50) not null, -- 댓글 작성자
+replydate date default sysdate, -- 등록날짜
+updatedate date default sysdate -- 변경날짜
+);
+
+create SEQUENCE seq_reply;
+alter table tbl_reply add constraint pk_reply primary key (rno);
+alter table tbl_reply add constraint fk_reply_board FOREIGN key (bno) REFERENCES tbl_board (bno);
+
+drop SEQUENCE req_reply;
+
+select * from tbl_board where bno > 0;
+
+insert into tbl_reply (rno, bno, reply, replyer)
+values (seq_reply.nextval, 300, '300번의 댓글4', 'user04');
+
+select bno, title, content, writer, regdate, updatedate
+	from (select /*+ INDEX_DESC(tbl_board pk_board) */
+                 rownum rn, bno, title, content, writer, regdate, updatedate
+       	  from tbl_board
+       	  where
+ 
+       	  rownum <=10
+       	 )
+	where rn >0;
+    
+select * from tbl_reply;
+
+update tbl_reply set replydate=sysdate-2 where rno < 5;
+
+commit;
